@@ -1,0 +1,123 @@
+{
+  "name": "Scorecard",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+
+  "theme": {
+    "colors": {
+      "primary": "#3a9bd5",
+      "primaryLight": "#b8ddf0",
+      "primaryMuted": "#d4ecf6",
+      "primaryFaint": "#eaf5fb",
+      "ink": "#2c3e50",
+      "background": "#fdfdfd",
+      "pageBackground": "#e8e0d6",
+      "border": "#a5d4e8",
+      "borderLight": "#cde6f2",
+      "diamondFill": "#e2f1f8",
+      "diamondStroke": "#a5d4e8"
+    },
+    "fonts": {
+      "display": "Barlow Condensed",
+      "body": "Barlow"
+    },
+    "sizing": {
+      "inningCellWidth": 64,
+      "rowHeight": 66,
+      "playerColWidth": 110,
+      "posColWidth": 28,
+      "statColWidth": 24
+    }
+  },
+
+  "page": {
+    "size": "LETTER",
+    "orientation": "landscape",
+    "margins": {
+      "top": 24,
+      "right": 24,
+      "bottom": 24,
+      "left": 24
+    }
+  },
+
+  "header": {
+    "show": true,
+    "fields": [
+      { "key": "date", "label": "Date", "width": "20%" },
+      { "key": "awayTeam", "label": "Away", "width": "20%" },
+      { "key": "homeTeam", "label": "Home", "width": "20%" },
+      { "key": "venue", "label": "Venue", "width": "25%" },
+      { "key": "weather", "label": "Weather", "width": "15%" }
+    ]
+  },
+
+  "grid": {
+    "rows": 10,
+    "innings": 12,
+    "statColumns": [
+      { "key": "AB", "label": "AB" },
+      { "key": "R", "label": "R" },
+      { "key": "H", "label": "H" },
+      { "key": "RBI", "label": "RBI" }
+    ]
+  },
+
+  "cell": {
+    "outcomes": {
+      "show": true,
+      "position": "top",
+      "items": ["1B", "2B", "3B", "HR", "BB"]
+    },
+    "diamond": {
+      "show": true,
+      "style": "filled",
+      "maxSize": 42
+    },
+    "count": {
+      "show": true,
+      "position": "bottom-right",
+      "balls": 3,
+      "strikes": 2,
+      "layout": "vertical"
+    }
+  },
+
+  "pitchers": {
+    "rows": 5,
+    "stats": [
+      { "key": "IP", "label": "IP" },
+      { "key": "H", "label": "H" },
+      { "key": "R", "label": "R" },
+      { "key": "ER", "label": "ER" },
+      { "key": "BB", "label": "BB" },
+      { "key": "K", "label": "K" }
+    ]
+  },
+
+  "scoreboard": {
+    "show": true,
+    "totals": ["R", "H", "E"]
+  },
+
+  "notes": {
+    "show": true,
+    "lines": 5
+  },
+
+  "print": {
+    "fitToPage": true
+  },
+
+  "sections": {
+    "away": {
+      "label": "Top / Away Team",
+      "footer": ["pitchers", "notes"]
+    },
+    "home": {
+      "label": "Bottom / Home Team",
+      "footer": ["pitchers", "scoreboard"]
+    }
+  }
+}
