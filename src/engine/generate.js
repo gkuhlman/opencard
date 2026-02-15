@@ -599,17 +599,22 @@ export function generatePage(config) {
       justify-content: center;
       flex-shrink: 0;
       line-height: 1;
+      width: 100%;
+      overflow: hidden;
     }
 
     .outcome-labels span {
       font-family: var(--font-display);
-      font-size: 7px;
+      font-size: calc(var(--cell-size) * 0.11);
       font-weight: 600;
       letter-spacing: 0;
       color: var(--primary-light);
       text-align: center;
       padding: 0 1px;
       line-height: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .diamond-wrap {

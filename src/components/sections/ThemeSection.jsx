@@ -1,6 +1,11 @@
+import { useState } from 'react';
+import FontPicker from 'react-fontpicker-ts';
+import 'react-fontpicker-ts/dist/index.css';
 import SectionHeader from '../shared/SectionHeader';
 import ColorPicker from '../shared/ColorPicker';
 import NumberInput from '../shared/NumberInput';
+import Toggle from '../shared/Toggle';
+import { deriveColors } from '../../engine/colorUtils';
 
 const COLOR_FIELDS = [
   { key: 'primary', label: 'Primary' },
@@ -25,42 +30,88 @@ const SIZING_FIELDS = [
 ];
 
 export default function ThemeSection({ config, updateConfig }) {
+  const [autoColors, setAutoColors] = useState(false);
+
+  const handleAutoToggle = (enabled) => {
+    setAutoColors(enabled);
+    if (enabled) {
+      const derived = deriveColors(config.theme.colors.primary);
+      // Keep current pageBackground since it's independent
+      derived.pageBackground = config.theme.colors.pageBackground;
+      for (const [key, value] of Object.entries(derived)) {
+        updateConfig(`theme.colors.${key}`, value);
+      }
+    }
+  };
+
+  const handlePrimaryChange = (hex) => {
+    if (autoColors) {
+      const derived = deriveColors(hex);
+      derived.pageBackground = config.theme.colors.pageBackground;
+      for (const [key, value] of Object.entries(derived)) {
+        updateConfig(`theme.colors.${key}`, value);
+      }
+    } else {
+      updateConfig('theme.colors.primary', hex);
+    }
+  };
+
   return (
     <SectionHeader title="Theme">
       <div>
         <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Colors</h4>
-        <div className="grid grid-cols-2 gap-2">
-          {COLOR_FIELDS.map(f => (
-            <ColorPicker
-              key={f.key}
-              label={f.label}
-              value={config.theme.colors[f.key]}
-              onChange={v => updateConfig(`theme.colors.${f.key}`, v)}
-            />
-          ))}
+        <div className="mb-3">
+          <Toggle
+            label="Auto-derive from primary"
+            checked={autoColors}
+            onChange={handleAutoToggle}
+          />
         </div>
+        {autoColors ? (
+          <div className="grid grid-cols-2 gap-2">
+            <ColorPicker
+              label="Primary"
+              value={config.theme.colors.primary}
+              onChange={handlePrimaryChange}
+            />
+            <ColorPicker
+              label="Page Background"
+              value={config.theme.colors.pageBackground}
+              onChange={v => updateConfig('theme.colors.pageBackground', v)}
+            />
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 gap-2">
+            {COLOR_FIELDS.map(f => (
+              <ColorPicker
+                key={f.key}
+                label={f.label}
+                value={config.theme.colors[f.key]}
+                onChange={f.key === 'primary' ? handlePrimaryChange : v => updateConfig(`theme.colors.${f.key}`, v)}
+              />
+            ))}
+          </div>
+        )}
       </div>
       <div>
         <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Fonts</h4>
-        <div className="space-y-2">
-          <label className="flex items-center gap-2">
-            <span className="text-sm text-gray-700">Display</span>
-            <input
-              type="text"
-              value={config.theme.fonts.display}
-              onChange={e => updateConfig('theme.fonts.display', e.target.value)}
-              className="flex-1 px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-400"
+        <div className="space-y-3">
+          <div>
+            <span className="text-sm text-gray-700 block mb-1">Display</span>
+            <FontPicker
+              defaultValue={config.theme.fonts.display}
+              value={(font) => updateConfig('theme.fonts.display', font)}
+              autoLoad
             />
-          </label>
-          <label className="flex items-center gap-2">
-            <span className="text-sm text-gray-700">Body</span>
-            <input
-              type="text"
-              value={config.theme.fonts.body}
-              onChange={e => updateConfig('theme.fonts.body', e.target.value)}
-              className="flex-1 px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-400"
+          </div>
+          <div>
+            <span className="text-sm text-gray-700 block mb-1">Body</span>
+            <FontPicker
+              defaultValue={config.theme.fonts.body}
+              value={(font) => updateConfig('theme.fonts.body', font)}
+              autoLoad
             />
-          </label>
+          </div>
         </div>
       </div>
       <div>
