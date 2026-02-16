@@ -48,6 +48,18 @@ export default function LayoutSection({ config, updateConfig }) {
               ))}
             </select>
           </label>
+          <label className="flex items-center gap-2">
+            <span className="text-sm text-gray-700">Pages</span>
+            <select
+              value={config.pages}
+              onChange={e => updateConfig('pages', e.target.value)}
+              className="px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-400"
+            >
+              <option value="both">Away + Home</option>
+              <option value="away">Away only</option>
+              <option value="home">Home only</option>
+            </select>
+          </label>
         </div>
       </div>
       <div>

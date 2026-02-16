@@ -111,6 +111,8 @@
     "fitToPage": true
   },
 
+  "pages": "both",
+
   "sections": {
     "away": {
       "label": "Top / Away Team",

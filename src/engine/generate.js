@@ -323,7 +323,8 @@ function calculatePrintZoom(config) {
 
   let maxPageH = 0;
 
-  for (const side of ['away', 'home']) {
+  const sides = config.pages === 'away' ? ['away'] : config.pages === 'home' ? ['home'] : ['away', 'home'];
+  for (const side of sides) {
     let height = 0;
 
     height += 32;
@@ -412,9 +413,15 @@ export function generatePage(config) {
     }
 
     .scorecard {
-      background: var(--background);
       width: fit-content;
       max-width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .print-page {
+      background: var(--background);
       padding: 28px 32px;
       border-radius: 6px;
       box-shadow:
@@ -864,10 +871,6 @@ export function generatePage(config) {
       color: var(--primary-light);
     }
 
-    .print-page:not(:first-child) .game-header,
-    .print-page:not(:last-child) .card-footer {
-      display: none;
-    }
 
     @page {
       size: ${pageInfo.cssSize};
@@ -883,22 +886,14 @@ export function generatePage(config) {
       }
 
       .scorecard {
-        box-shadow: none;
-        border-radius: 0;
+        gap: 0;
         width: 100%;
-        padding: 16px;
-      }
-
-      .print-page:not(:first-child) .game-header,
-      .print-page:not(:last-child) .card-footer {
-        display: block;
-      }
-
-      .print-page:not(:first-child) .game-header {
-        display: flex;
       }
 
       .print-page {
+        box-shadow: none;
+        border-radius: 0;
+        padding: 16px;
         page-break-after: always;
         page-break-inside: avoid;
       }
@@ -935,20 +930,20 @@ export function generatePage(config) {
 <body>
 
 <div class="scorecard">
-  <div class="print-page">
+${config.pages !== 'home' ? `  <div class="print-page">
 ${config.header.show ? generateHeader(config) : ""}
 ${generateHalfInning(config, "away")}
     <div class="card-footer">
       ${escapeHtml(config.name)}
     </div>
-  </div>
-  <div class="print-page">
+  </div>` : ''}
+${config.pages !== 'away' ? `  <div class="print-page">
 ${config.header.show ? generateHeader(config) : ""}
 ${generateHalfInning(config, "home")}
     <div class="card-footer">
       ${escapeHtml(config.name)}
     </div>
-  </div>
+  </div>` : ''}
 </div>
 
 </body>
