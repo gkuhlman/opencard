@@ -5,7 +5,7 @@ import { deepMerge } from '../engine/generate';
 export default function PresetPicker({ loadPreset }) {
   return (
     <div className="mb-4">
-      <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Presets</h3>
+      <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Templates</h3>
       <div className="grid grid-cols-2 gap-2">
         {presets.map((preset) => {
           const merged = deepMerge(defaults, preset.overrides);
@@ -24,6 +24,7 @@ export default function PresetPicker({ loadPreset }) {
               </div>
               <div className="min-w-0">
                 <div className="text-xs font-medium text-gray-700 truncate">{preset.name}</div>
+                <div className="text-[10px] text-gray-400 truncate">{preset.description}</div>
               </div>
             </button>
           );

@@ -2,7 +2,16 @@ import SectionHeader from '../shared/SectionHeader';
 import Toggle from '../shared/Toggle';
 import NumberInput from '../shared/NumberInput';
 
-const PAGE_SIZES = ['LETTER', 'A4', 'LEGAL', 'TABLOID'];
+const PAGE_SIZES = [
+  { value: 'LETTER', label: 'Letter (8.5 x 11)' },
+  { value: 'A4', label: 'A4 (8.27 x 11.69)' },
+  { value: 'LEGAL', label: 'Legal (8.5 x 14)' },
+  { value: 'TABLOID', label: 'Tabloid (11 x 17)' },
+  { value: 'HALF_LETTER', label: 'Half Letter (5.5 x 8.5)' },
+  { value: 'A5', label: 'A5 (5.83 x 8.27)' },
+  { value: '5X7', label: '5 x 7' },
+  { value: '4X6', label: '4 x 6' },
+];
 export default function PrintSection({ config, updateConfig }) {
   return (
     <SectionHeader title="Print" defaultOpen={false}>
@@ -15,7 +24,7 @@ export default function PrintSection({ config, updateConfig }) {
             className="px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-400"
           >
             {PAGE_SIZES.map(s => (
-              <option key={s} value={s}>{s}</option>
+              <option key={s.value} value={s.value}>{s.label}</option>
             ))}
           </select>
         </label>

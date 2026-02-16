@@ -2,13 +2,35 @@ import { deriveColors } from './engine/colorUtils';
 
 const presets = [
   {
-    name: 'Classic Blue',
-    description: 'The default scorecard theme',
+    name: 'Standard',
+    description: 'Full scorecard, letter landscape',
     overrides: {},
   },
   {
-    name: 'Minimal B&W',
-    description: 'Clean black and white for easy printing',
+    name: 'Compact',
+    description: 'Half-letter, tighter layout',
+    overrides: {
+      page: { size: 'HALF_LETTER', orientation: 'landscape' },
+      grid: { rows: 9, innings: 9 },
+      theme: {
+        sizing: {
+          inningCellWidth: 52,
+          rowHeight: 54,
+          playerColWidth: 90,
+          posColWidth: 24,
+          statColWidth: 20,
+        },
+      },
+      cell: {
+        diamond: { maxSize: 34 },
+      },
+      pitchers: { rows: 4 },
+      notes: { lines: 3 },
+    },
+  },
+  {
+    name: 'Minimalist',
+    description: 'Clean B&W, just the diamond',
     overrides: {
       theme: {
         colors: {
@@ -25,11 +47,48 @@ const presets = [
           diamondStroke: '#bbbbbb',
         },
       },
+      cell: {
+        outcomes: { show: false },
+        count: { show: false },
+      },
+      grid: {
+        statColumns: [
+          { key: 'R', label: 'R' },
+          { key: 'H', label: 'H' },
+        ],
+      },
+      notes: { show: false },
+    },
+  },
+  {
+    name: 'Pocket',
+    description: '5x7 card, bare essentials',
+    overrides: {
+      page: { size: '5X7', orientation: 'landscape' },
+      grid: { rows: 9, innings: 9, statColumns: [{ key: 'R', label: 'R' }, { key: 'H', label: 'H' }] },
+      theme: {
+        sizing: {
+          inningCellWidth: 44,
+          rowHeight: 44,
+          playerColWidth: 72,
+          posColWidth: 20,
+          statColWidth: 18,
+        },
+      },
+      cell: {
+        outcomes: { show: false },
+        diamond: { maxSize: 28 },
+        count: { show: false },
+      },
+      header: { show: false },
+      pitchers: { rows: 3 },
+      notes: { show: false },
+      scoreboard: { show: false },
     },
   },
   {
     name: 'Retro Green',
-    description: 'Vintage field-green scorecard',
+    description: 'Vintage field-green theme',
     overrides: {
       theme: {
         colors: deriveColors('#2e7d32'),
@@ -38,7 +97,7 @@ const presets = [
   },
   {
     name: 'Dark Mode',
-    description: 'Easy on the eyes, dark background',
+    description: 'Dark background, easy on the eyes',
     overrides: {
       theme: {
         colors: {

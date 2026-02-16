@@ -277,6 +277,10 @@ const PAGE_SIZES = {
   A4: [8.27, 11.69],
   LEGAL: [8.5, 14],
   TABLOID: [11, 17],
+  HALF_LETTER: [5.5, 8.5],
+  A5: [5.83, 8.27],
+  '5X7': [5, 7],
+  '4X6': [4, 6],
 };
 
 function resolvePageSize(page) {
