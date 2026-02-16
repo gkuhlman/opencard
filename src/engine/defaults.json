@@ -45,7 +45,9 @@
   "header": {
     "show": true,
     "fields": [
-      { "key": "date", "label": "Date", "width": "20%" },
+      { "key": "date", "label": "Date", "width": "15%" },
+      { "key": "start", "label": "Start", "width": "8%" },
+      { "key": "end", "label": "End", "width": "8%" },
       { "key": "awayTeam", "label": "Away", "width": "20%" },
       { "key": "homeTeam", "label": "Home", "width": "20%" },
       { "key": "venue", "label": "Venue", "width": "25%" },
