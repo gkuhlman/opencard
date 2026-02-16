@@ -7,6 +7,32 @@ import NumberInput from '../shared/NumberInput';
 import Toggle from '../shared/Toggle';
 import { deriveColors } from '../../engine/colorUtils';
 
+const COLOR_PALETTES = [
+  { name: 'Classic Blue', colors: null }, // null = use deriveColors
+  { name: 'Navy', primary: '#1e3a5f' },
+  { name: 'Red', primary: '#c0392b' },
+  { name: 'Green', primary: '#2e7d32' },
+  { name: 'Purple', primary: '#6b3fa0' },
+  { name: 'Orange', primary: '#d35400' },
+  { name: 'Slate', primary: '#475569' },
+  {
+    name: 'Dark',
+    colors: {
+      primary: '#60a5fa',
+      primaryLight: '#1e3a5f',
+      primaryMuted: '#172d4a',
+      primaryFaint: '#111f33',
+      ink: '#e2e8f0',
+      background: '#0f172a',
+      pageBackground: '#020617',
+      border: '#334155',
+      borderLight: '#1e293b',
+      diamondFill: '#1e293b',
+      diamondStroke: '#475569',
+    },
+  },
+];
+
 const COLOR_FIELDS = [
   { key: 'primary', label: 'Primary' },
   { key: 'primaryLight', label: 'Primary Light' },
@@ -44,6 +70,14 @@ export default function ThemeSection({ config, updateConfig }) {
     }
   };
 
+  const applyPalette = (palette) => {
+    const colors = palette.colors || deriveColors(palette.primary);
+    const pageBackground = palette.colors?.pageBackground || config.theme.colors.pageBackground;
+    for (const [key, value] of Object.entries({ ...colors, pageBackground })) {
+      updateConfig(`theme.colors.${key}`, value);
+    }
+  };
+
   const handlePrimaryChange = (hex) => {
     if (autoColors) {
       const derived = deriveColors(hex);
@@ -60,6 +94,22 @@ export default function ThemeSection({ config, updateConfig }) {
     <SectionHeader title="Theme">
       <div>
         <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Colors</h4>
+        <div className="flex flex-wrap gap-1.5 mb-3">
+          {COLOR_PALETTES.map((p) => {
+            const bg = p.colors?.primary || p.primary || '#3a9bd5';
+            const isDark = p.name === 'Dark';
+            return (
+              <button
+                key={p.name}
+                type="button"
+                title={p.name}
+                onClick={() => applyPalette(p)}
+                className="w-7 h-7 rounded-full border-2 border-gray-200 hover:border-gray-400 transition-colors shrink-0"
+                style={{ background: isDark ? 'linear-gradient(135deg, #0f172a 50%, #60a5fa 50%)' : bg }}
+              />
+            );
+          })}
+        </div>
         <div className="mb-3">
           <Toggle
             label="Auto-derive from primary"
