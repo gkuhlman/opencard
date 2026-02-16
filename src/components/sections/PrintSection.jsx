@@ -3,8 +3,6 @@ import Toggle from '../shared/Toggle';
 import NumberInput from '../shared/NumberInput';
 
 const PAGE_SIZES = ['LETTER', 'A4', 'LEGAL', 'TABLOID'];
-const ORIENTATIONS = ['landscape', 'portrait'];
-
 export default function PrintSection({ config, updateConfig }) {
   return (
     <SectionHeader title="Print" defaultOpen={false}>
@@ -18,18 +16,6 @@ export default function PrintSection({ config, updateConfig }) {
           >
             {PAGE_SIZES.map(s => (
               <option key={s} value={s}>{s}</option>
-            ))}
-          </select>
-        </label>
-        <label className="flex items-center gap-2">
-          <span className="text-sm text-gray-700">Orientation</span>
-          <select
-            value={config.page.orientation}
-            onChange={e => updateConfig('page.orientation', e.target.value)}
-            className="px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-400"
-          >
-            {ORIENTATIONS.map(o => (
-              <option key={o} value={o}>{o}</option>
             ))}
           </select>
         </label>

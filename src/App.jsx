@@ -5,7 +5,7 @@ import FormPanel from './components/FormPanel';
 import Preview from './components/Preview';
 
 export default function App() {
-  const { config, overrides, updateConfig, resetConfig, importConfig, exportConfig, getOverridesJson } = useConfig();
+  const { config, updateConfig, resetConfig, importConfig, exportConfig, getConfigJson, shareConfig, loadPreset } = useConfig();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handlePrint = useCallback(() => {
@@ -29,7 +29,9 @@ export default function App() {
           resetConfig={resetConfig}
           importConfig={importConfig}
           exportConfig={exportConfig}
-          getOverridesJson={getOverridesJson}
+          getConfigJson={getConfigJson}
+          shareConfig={shareConfig}
+          loadPreset={loadPreset}
           onPrint={handlePrint}
         />
       </div>
@@ -78,7 +80,9 @@ export default function App() {
             resetConfig={resetConfig}
             importConfig={importConfig}
             exportConfig={exportConfig}
-            getOverridesJson={getOverridesJson}
+            getConfigJson={getConfigJson}
+            shareConfig={shareConfig}
+            loadPreset={loadPreset}
             onPrint={handlePrint}
           />
         </div>

@@ -1,5 +1,6 @@
 import SectionHeader from '../shared/SectionHeader';
 import NumberInput from '../shared/NumberInput';
+import Toggle from '../shared/Toggle';
 
 export default function GridSection({ config, updateConfig }) {
   const { rows, innings, statColumns } = config.grid;
@@ -24,6 +25,7 @@ export default function GridSection({ config, updateConfig }) {
         <NumberInput label="Rows" value={rows} min={1} max={20} onChange={v => updateConfig('grid.rows', v)} />
         <NumberInput label="Innings" value={innings} min={1} max={20} onChange={v => updateConfig('grid.innings', v)} />
       </div>
+      <Toggle label="Substitution line" checked={config.grid.substitutionLine} onChange={v => updateConfig('grid.substitutionLine', v)} />
       <div>
         <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Stat Columns</h4>
         <div className="space-y-1">

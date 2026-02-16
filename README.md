@@ -1,16 +1,130 @@
-# React + Vite
+# OpenCard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A visual baseball scorecard builder. Customize every detail with a live preview, then print or share.
 
-Currently, two official plugins are available:
+**No account needed. Runs in your browser. Fully open source.**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- **Visual editor** — tweak colors, fonts, grid size, stat columns, and more with a form UI
+- **Live preview** — see changes instantly as you edit
+- **Presets** — start from Classic Blue, Minimal B&W, Retro Green, or Dark Mode
+- **Persistence** — your changes are saved to localStorage automatically
+- **Sharing** — generate a compressed URL and share your scorecard with anyone
+- **JSON editor** — switch to raw JSON for full control over every config field
+- **Print-ready** — open in a new window and print with optimized styles
+- **Export/Import** — download your config as JSON, load it back anytime
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Get Started
 
-## Expanding the ESLint configuration
+Visit the live app: `https://gkuhlman.github.io/opencard/`
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Or run locally:
+
+```bash
+git clone https://github.com/gkuhlman/opencard.git
+cd opencard
+npm install
+npm run dev
+```
+
+## Config Reference
+
+The scorecard is driven by a JSON config. The visual editor covers all fields, but you can also edit the JSON directly. Every field is optional — only specify what you want to change from the defaults.
+
+### Theme
+
+Colors, fonts, and sizing for the scorecard layout.
+
+```json
+{
+  "theme": {
+    "colors": {
+      "primary": "#3a9bd5",
+      "primaryLight": "#b8ddf0",
+      "primaryFaint": "#eaf5fb",
+      "ink": "#2c3e50",
+      "background": "#fdfdfd",
+      "border": "#a5d4e8"
+    },
+    "fonts": {
+      "display": "Barlow Condensed",
+      "body": "Barlow"
+    },
+    "sizing": {
+      "inningCellWidth": 64,
+      "rowHeight": 66,
+      "playerColWidth": 110
+    }
+  }
+}
+```
+
+### Grid
+
+```json
+{
+  "grid": {
+    "rows": 10,
+    "innings": 12,
+    "substitutionLine": false,
+    "statColumns": [
+      { "key": "AB", "label": "AB" },
+      { "key": "R", "label": "R" },
+      { "key": "H", "label": "H" },
+      { "key": "RBI", "label": "RBI" }
+    ]
+  }
+}
+```
+
+### Cell (At-Bat)
+
+```json
+{
+  "cell": {
+    "outcomes": {
+      "show": true,
+      "items": ["1B", "2B", "3B", "HR", "BB"]
+    },
+    "diamond": {
+      "show": true,
+      "maxSize": 42
+    },
+    "count": {
+      "show": true,
+      "balls": 3,
+      "strikes": 2
+    }
+  }
+}
+```
+
+### Pitchers
+
+```json
+{
+  "pitchers": {
+    "rows": 5,
+    "stats": [
+      { "key": "IP", "label": "IP" },
+      { "key": "H", "label": "H" },
+      { "key": "R", "label": "R" },
+      { "key": "ER", "label": "ER" },
+      { "key": "BB", "label": "BB" },
+      { "key": "K", "label": "K" }
+    ]
+  }
+}
+```
+
+## Printing
+
+Click **Print** in the toolbar to open the scorecard in a new window with print-optimized styles. For best results:
+
+- Set margins to **Minimum** or **None**
+- Enable **Background graphics** for shaded stat columns
+
+## License
+
+MIT

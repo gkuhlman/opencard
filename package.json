@@ -1,7 +1,9 @@
 {
-  "name": "scorecardgui",
+  "name": "opencard",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Open source baseball scorecard builder with visual editor and live preview",
+  "keywords": ["baseball", "scorecard", "react", "svg"],
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,6 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "lz-string": "^1.5.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-fontpicker-ts": "^1.3.0"

@@ -56,6 +56,7 @@
   "grid": {
     "rows": 10,
     "innings": 12,
+    "substitutionLine": false,
     "statColumns": [
       { "key": "AB", "label": "AB" },
       { "key": "R", "label": "R" },

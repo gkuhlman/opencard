@@ -2,6 +2,8 @@ import SectionHeader from '../shared/SectionHeader';
 import Toggle from '../shared/Toggle';
 import NumberInput from '../shared/NumberInput';
 
+const ORIENTATIONS = ['landscape', 'portrait'];
+
 export default function LayoutSection({ config, updateConfig }) {
   const updateHeaderField = (index, field, value) => {
     const fields = [...config.header.fields];
@@ -33,6 +35,18 @@ export default function LayoutSection({ config, updateConfig }) {
               onChange={e => updateConfig('name', e.target.value)}
               className="flex-1 px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-400"
             />
+          </label>
+          <label className="flex items-center gap-2">
+            <span className="text-sm text-gray-700">Orientation</span>
+            <select
+              value={config.page.orientation}
+              onChange={e => updateConfig('page.orientation', e.target.value)}
+              className="px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-400"
+            >
+              {ORIENTATIONS.map(o => (
+                <option key={o} value={o}>{o}</option>
+              ))}
+            </select>
           </label>
         </div>
       </div>

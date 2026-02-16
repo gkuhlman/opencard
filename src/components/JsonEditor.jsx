@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 
-export default function JsonEditor({ overridesJson, onApply }) {
-  const [text, setText] = useState(overridesJson);
+export default function JsonEditor({ configJson, onApply }) {
+  const [text, setText] = useState(configJson);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    setText(overridesJson);
+    setText(configJson);
     setError(null);
-  }, [overridesJson]);
+  }, [configJson]);
 
   const handleApply = () => {
     try {

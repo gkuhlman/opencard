@@ -139,8 +139,8 @@ function generateBattingGrid(config, tbodyId) {
 
   for (let r = 0; r < rows; r++) {
     html += "<tr>";
-    html += '<td class="cell-player"></td>';
-    html += '<td class="cell-pos"></td>';
+    html += `<td class="cell-player">${config.grid.substitutionLine ? '<div class="sub-line"></div>' : ''}</td>`;
+    html += `<td class="cell-pos">${config.grid.substitutionLine ? '<div class="sub-line"></div>' : ''}</td>`;
     for (let i = 0; i < innings; i++) {
       html += `<td class="cell-inning">${atBatHtml}</td>`;
     }
@@ -553,11 +553,24 @@ export function generatePage(config) {
       border-right: 1px solid var(--border-light);
     }
 
+    .scoring-grid td.cell-player,
+    .scoring-grid td.cell-pos {
+      position: relative;
+    }
+
     .scoring-grid td.cell-pos {
       font-family: var(--font-display);
       font-size: 12px;
       color: var(--primary);
       border-right: 1px solid var(--border);
+    }
+
+    .sub-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      border-top: 1px dashed var(--border);
     }
 
     .scoring-grid td.cell-inning {
@@ -640,8 +653,8 @@ export function generatePage(config) {
 
     .count-tracker {
       position: absolute;
-      bottom: 1px;
-      right: 1px;
+      bottom: -1px;
+      right: -1px;
       display: flex;
       align-items: flex-end;
       gap: 0;
@@ -657,7 +670,7 @@ export function generatePage(config) {
 
     .count-group .count-label {
       font-family: var(--font-display);
-      font-size: 5.5px;
+      font-size: 6.5px;
       font-weight: 700;
       color: var(--primary-light);
       line-height: 1;
@@ -665,8 +678,8 @@ export function generatePage(config) {
     }
 
     .count-box {
-      width: 7px;
-      height: 7px;
+      width: 9px;
+      height: 9px;
       border: 1px solid var(--border);
       background: var(--background);
     }
