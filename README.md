@@ -125,6 +125,39 @@ Click **Print** in the toolbar to open the scorecard in a new window with print-
 - Set margins to **Minimum** or **None**
 - Enable **Background graphics** for shaded stat columns
 
+## Contributing
+
+Contributions are welcome! Here's how to get started:
+
+```bash
+git clone https://github.com/gkuhlman/opencard.git
+cd opencard
+npm install
+npm run dev      # start dev server
+npm test         # run tests
+```
+
+### Project structure
+
+- `src/engine/` — Pure functions that generate the scorecard HTML. This is the core — changes here should include tests.
+- `src/engine/defaults.json` — Default config values. Every field a user can customize lives here.
+- `src/hooks/useConfig.js` — React hook managing config state, localStorage, and URL sharing.
+- `src/components/` — React UI components (form editor, preview, preset picker).
+- `src/presets.js` — Template definitions (layout + color combinations).
+
+### Guidelines
+
+- **Add tests** for any changes to the engine (`src/engine/`). Run `npm test` before submitting.
+- **Keep configs backwards-compatible.** New fields should have defaults so existing shared URLs and saved configs still work.
+- **Templates and presets** are a great first contribution — add new color palettes or layout templates in `src/presets.js`.
+
+### Submitting a PR
+
+1. Fork the repo and create a branch
+2. Make your changes
+3. Run `npm test` and `npm run build` to verify
+4. Open a PR with a description of what you changed and why
+
 ## License
 
 MIT
