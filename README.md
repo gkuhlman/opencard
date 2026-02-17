@@ -1,6 +1,6 @@
 # OpenCard
 
-A visual baseball scorecard builder. Customize every detail with a live preview, then print or share.
+A visual baseball scorecard builder and engine. Use JSON to create and share scorecard formats
 
 ## Features
 
