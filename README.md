@@ -2,8 +2,6 @@
 
 A visual baseball scorecard builder. Customize every detail with a live preview, then print or share.
 
-**No account needed. Runs in your browser. Fully open source.**
-
 ## Features
 
 - **Visual editor** — tweak colors, fonts, grid size, stat columns, and more with a form UI
