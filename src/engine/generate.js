@@ -65,7 +65,11 @@ function generateCssVars(config) {
       --player-col: ${s.playerColWidth}px;
       --pos-col: ${s.posColWidth}px;
       --stat-col: ${s.statColWidth}px;
-      --diamond-max: ${config.cell.diamond.maxSize}px;`;
+      --diamond-max: ${config.cell.diamond.maxSize}px;
+      --margin-top: ${(config.page.margins && config.page.margins.top != null) ? config.page.margins.top : 29}px;
+      --margin-right: ${(config.page.margins && config.page.margins.right != null) ? config.page.margins.right : 29}px;
+      --margin-bottom: ${(config.page.margins && config.page.margins.bottom != null) ? config.page.margins.bottom : 29}px;
+      --margin-left: ${(config.page.margins && config.page.margins.left != null) ? config.page.margins.left : 29}px;`;
 }
 
 function generateAtBatCell(config) {
@@ -312,7 +316,7 @@ function resolvePageSize(page) {
   const availW = (widthIn - ml - mr) * 96;
   const availH = (heightIn - mt - mb) * 96;
 
-  return { widthIn, heightIn, availW, availH, cssSize };
+  return { widthIn, heightIn, availW, availH, cssSize, mt, mr, mb, ml };
 }
 
 function calculatePrintZoom(config) {
@@ -422,7 +426,7 @@ export function generatePage(config) {
 
     .print-page {
       background: var(--background);
-      padding: 28px 32px;
+      padding: var(--margin-top) var(--margin-right) var(--margin-bottom) var(--margin-left);
       border-radius: 6px;
       box-shadow:
         0 2px 12px rgba(0,0,0,0.08),
@@ -874,7 +878,7 @@ export function generatePage(config) {
 
     @page {
       size: ${pageInfo.cssSize};
-      margin: 0.3in;
+      margin: 0;
     }
 
     @media print {
@@ -893,7 +897,7 @@ export function generatePage(config) {
       .print-page {
         box-shadow: none;
         border-radius: 0;
-        padding: 16px;
+        padding: var(--margin-top) var(--margin-right) var(--margin-bottom) var(--margin-left);
         page-break-after: always;
         page-break-inside: avoid;
       }
