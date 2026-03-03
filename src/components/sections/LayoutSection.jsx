@@ -1,38 +1,43 @@
-import SectionHeader from '../shared/SectionHeader';
-import Toggle from '../shared/Toggle';
-import NumberInput from '../shared/NumberInput';
+import SectionHeader from "../shared/SectionHeader";
+import Toggle from "../shared/Toggle";
+import NumberInput from "../shared/NumberInput";
 
-const ORIENTATIONS = ['landscape', 'portrait'];
+const ORIENTATIONS = ["landscape", "portrait"];
 
 export default function LayoutSection({ config, updateConfig }) {
   const updateHeaderField = (index, field, value) => {
     const fields = [...config.header.fields];
     fields[index] = { ...fields[index], [field]: value };
-    updateConfig('header.fields', fields);
+    updateConfig("header.fields", fields);
   };
 
   const addHeaderField = () => {
-    updateConfig('header.fields', [
+    updateConfig("header.fields", [
       ...config.header.fields,
-      { key: '', label: '', width: '15%' },
+      { key: "", label: "", width: "15%" },
     ]);
   };
 
   const removeHeaderField = (index) => {
-    updateConfig('header.fields', config.header.fields.filter((_, i) => i !== index));
+    updateConfig(
+      "header.fields",
+      config.header.fields.filter((_, i) => i !== index),
+    );
   };
 
   return (
     <SectionHeader title="Layout">
       <div>
-        <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">General</h4>
+        <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+          General
+        </h4>
         <div className="space-y-2">
           <label className="flex items-center gap-2">
             <span className="text-sm text-gray-700">Name</span>
             <input
               type="text"
               value={config.name}
-              onChange={e => updateConfig('name', e.target.value)}
+              onChange={(e) => updateConfig("name", e.target.value)}
               className="flex-1 px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-400"
             />
           </label>
@@ -40,11 +45,13 @@ export default function LayoutSection({ config, updateConfig }) {
             <span className="text-sm text-gray-700">Orientation</span>
             <select
               value={config.page.orientation}
-              onChange={e => updateConfig('page.orientation', e.target.value)}
+              onChange={(e) => updateConfig("page.orientation", e.target.value)}
               className="px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-400"
             >
-              {ORIENTATIONS.map(o => (
-                <option key={o} value={o}>{o}</option>
+              {ORIENTATIONS.map((o) => (
+                <option key={o} value={o}>
+                  {o}
+                </option>
               ))}
             </select>
           </label>
@@ -52,7 +59,7 @@ export default function LayoutSection({ config, updateConfig }) {
             <span className="text-sm text-gray-700">Pages</span>
             <select
               value={config.pages}
-              onChange={e => updateConfig('pages', e.target.value)}
+              onChange={(e) => updateConfig("pages", e.target.value)}
               className="px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-400"
             >
               <option value="both">Away + Home</option>
@@ -63,12 +70,22 @@ export default function LayoutSection({ config, updateConfig }) {
         </div>
       </div>
       <div>
-        <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Header</h4>
+        <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+          Header
+        </h4>
         <Toggle
           label="Show header"
+          className="mb-2"
           checked={config.header.show}
-          onChange={v => updateConfig('header.show', v)}
+          onChange={(v) => updateConfig("header.show", v)}
         />
+        {config.header.show && config.pages === "both" && (
+          <Toggle
+            label="Show on second page"
+            checked={config.header.showOnSecondPage !== false}
+            onChange={(v) => updateConfig("header.showOnSecondPage", v)}
+          />
+        )}
         {config.header.show && (
           <div className="mt-2 space-y-1">
             {config.header.fields.map((f, i) => (
@@ -77,14 +94,18 @@ export default function LayoutSection({ config, updateConfig }) {
                   type="text"
                   value={f.label}
                   placeholder="Label"
-                  onChange={e => updateHeaderField(i, 'label', e.target.value)}
+                  onChange={(e) =>
+                    updateHeaderField(i, "label", e.target.value)
+                  }
                   className="w-20 px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-400"
                 />
                 <input
                   type="text"
                   value={f.width}
                   placeholder="Width"
-                  onChange={e => updateHeaderField(i, 'width', e.target.value)}
+                  onChange={(e) =>
+                    updateHeaderField(i, "width", e.target.value)
+                  }
                   className="w-14 px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-400"
                 />
                 <button
@@ -107,20 +128,24 @@ export default function LayoutSection({ config, updateConfig }) {
         )}
       </div>
       <div>
-        <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Scoreboard</h4>
+        <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+          Scoreboard
+        </h4>
         <Toggle
           label="Show scoreboard"
           checked={config.scoreboard.show}
-          onChange={v => updateConfig('scoreboard.show', v)}
+          onChange={(v) => updateConfig("scoreboard.show", v)}
         />
       </div>
       <div>
-        <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Notes</h4>
+        <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+          Notes
+        </h4>
         <div className="space-y-2">
           <Toggle
             label="Show notes"
             checked={config.notes.show}
-            onChange={v => updateConfig('notes.show', v)}
+            onChange={(v) => updateConfig("notes.show", v)}
           />
           {config.notes.show && (
             <NumberInput
@@ -128,20 +153,24 @@ export default function LayoutSection({ config, updateConfig }) {
               value={config.notes.lines}
               min={1}
               max={15}
-              onChange={v => updateConfig('notes.lines', v)}
+              onChange={(v) => updateConfig("notes.lines", v)}
             />
           )}
         </div>
       </div>
       <div>
-        <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Section Labels</h4>
+        <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+          Section Labels
+        </h4>
         <div className="space-y-2">
           <label className="flex items-center gap-2">
             <span className="text-sm text-gray-700 shrink-0">Away</span>
             <input
               type="text"
               value={config.sections.away.label}
-              onChange={e => updateConfig('sections.away.label', e.target.value)}
+              onChange={(e) =>
+                updateConfig("sections.away.label", e.target.value)
+              }
               className="flex-1 px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-400"
             />
           </label>
@@ -150,7 +179,9 @@ export default function LayoutSection({ config, updateConfig }) {
             <input
               type="text"
               value={config.sections.home.label}
-              onChange={e => updateConfig('sections.home.label', e.target.value)}
+              onChange={(e) =>
+                updateConfig("sections.home.label", e.target.value)
+              }
               className="flex-1 px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-400"
             />
           </label>

@@ -1,6 +1,6 @@
-export default function Toggle({ label, checked, onChange }) {
+export default function Toggle({ label, checked, onChange, className }) {
   return (
-    <label className="flex items-center gap-2 cursor-pointer">
+    <label className={`flex items-center gap-2 cursor-pointer ${className || ""}`}>
       <div className="relative">
         <input
           type="checkbox"

@@ -25,7 +25,8 @@ export default function GridSection({ config, updateConfig }) {
         <NumberInput label="Rows" value={rows} min={1} max={20} onChange={v => updateConfig('grid.rows', v)} />
         <NumberInput label="Innings" value={innings} min={1} max={20} onChange={v => updateConfig('grid.innings', v)} />
       </div>
-      <Toggle label="Substitution line" checked={config.grid.substitutionLine} onChange={v => updateConfig('grid.substitutionLine', v)} />
+      <Toggle label="Show inning labels" checked={config.grid.showInningLabels !== false} onChange={v => updateConfig('grid.showInningLabels', v)} />
+      <NumberInput label="Substitution lines" value={config.grid.substitutionLines || 0} min={0} max={3} onChange={v => updateConfig('grid.substitutionLines', v)} />
       <div>
         <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Stat Columns</h4>
         <div className="space-y-1">

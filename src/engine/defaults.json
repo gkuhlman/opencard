@@ -44,6 +44,7 @@
 
   "header": {
     "show": true,
+    "showOnSecondPage": true,
     "fields": [
       { "key": "date", "label": "Date", "width": "15%" },
       { "key": "start", "label": "Start", "width": "8%" },
@@ -58,7 +59,8 @@
   "grid": {
     "rows": 10,
     "innings": 12,
-    "substitutionLine": false,
+    "showInningLabels": true,
+    "substitutionLines": 0,
     "statColumns": [
       { "key": "AB", "label": "AB" },
       { "key": "R", "label": "R" },

@@ -134,7 +134,7 @@ function generateBattingGrid(config, tbodyId) {
   html += '<th class="col-player">Player</th>';
   html += '<th class="col-pos">Pos</th>';
   for (let i = 1; i <= innings; i++) {
-    html += `<th class="col-inning">${i}</th>`;
+    html += `<th class="col-inning">${config.grid.showInningLabels !== false ? i : ''}</th>`;
   }
   for (const col of statColumns) {
     html += `<th class="col-stat">${escapeHtml(col.label)}</th>`;
@@ -143,8 +143,13 @@ function generateBattingGrid(config, tbodyId) {
 
   for (let r = 0; r < rows; r++) {
     html += "<tr>";
-    html += `<td class="cell-player">${config.grid.substitutionLine ? '<div class="sub-line"></div>' : ''}</td>`;
-    html += `<td class="cell-pos">${config.grid.substitutionLine ? '<div class="sub-line"></div>' : ''}</td>`;
+    const subLines = config.grid.substitutionLines || 0;
+    let subHtml = '';
+    for (let k = 1; k <= subLines; k++) {
+      subHtml += `<div class="sub-line" style="top:${(k / (subLines + 1)) * 100}%"></div>`;
+    }
+    html += `<td class="cell-player">${subHtml}</td>`;
+    html += `<td class="cell-pos">${subHtml}</td>`;
     for (let i = 0; i < innings; i++) {
       html += `<td class="cell-inning">${atBatHtml}</td>`;
     }
@@ -209,7 +214,10 @@ function generateScoreboard(config) {
 
   html += '<table class="scoreboard-table"><thead><tr><th>Team</th>';
   for (let i = 1; i <= innings; i++) {
-    html += `<th>${i}</th>`;
+    html += `<th>${config.grid.showInningLabels !== false ? i : ''}</th>`;
+  }
+  for (const t of totals) {
+    html += `<th class="scoreboard-totals">${escapeHtml(t)}</th>`;
   }
   html += "</tr></thead><tbody>";
   for (let t = 0; t < 2; t++) {
@@ -217,20 +225,8 @@ function generateScoreboard(config) {
     for (let i = 0; i < innings; i++) {
       html += "<td></td>";
     }
-    html += "</tr>";
-  }
-  html += "</tbody></table>";
-
-  html +=
-    '<table class="scoreboard-table"><thead class="scoreboard-totals"><tr><th></th>';
-  for (const t of totals) {
-    html += `<th>${escapeHtml(t)}</th>`;
-  }
-  html += "</tr></thead><tbody>";
-  for (let t = 0; t < 2; t++) {
-    html += "<tr><td></td>";
     for (let i = 0; i < totals.length; i++) {
-      html += "<td></td>";
+      html += '<td class="scoreboard-totals"></td>';
     }
     html += "</tr>";
   }
@@ -333,7 +329,7 @@ function calculatePrintZoom(config) {
 
     height += 32;
 
-    if (config.header.show) height += 56;
+    if (config.header.show && (side === 'away' || config.header.showOnSecondPage !== false)) height += 56;
 
     height += 26;
     height += 28;
@@ -346,7 +342,7 @@ function calculatePrintZoom(config) {
       let itemH = 0;
       if (item === 'pitchers') itemH = 28 + 24 + p.rows * 26;
       if (item === 'notes' && n.show) itemH = 28 + 16 + n.lines * 22;
-      if (item === 'scoreboard' && config.scoreboard.show) itemH = 170;
+      if (item === 'scoreboard' && config.scoreboard.show) itemH = 100;
       maxFooterH = Math.max(maxFooterH, itemH);
     }
     height += maxFooterH;
@@ -584,7 +580,6 @@ export function generatePage(config) {
       position: absolute;
       left: 0;
       right: 0;
-      top: 50%;
       border-top: 1px dashed var(--border);
     }
 
@@ -859,9 +854,14 @@ export function generatePage(config) {
       font-weight: 500;
     }
 
-    .scoreboard-totals th {
+    th.scoreboard-totals {
       background: var(--primary);
       color: var(--background);
+      font-weight: 700;
+    }
+
+    td.scoreboard-totals {
+      background: var(--primary-faint);
       font-weight: 700;
     }
 
@@ -942,7 +942,7 @@ ${generateHalfInning(config, "away")}
     </div>
   </div>` : ''}
 ${config.pages !== 'away' ? `  <div class="print-page">
-${config.header.show ? generateHeader(config) : ""}
+${config.header.show && config.header.showOnSecondPage !== false ? generateHeader(config) : ""}
 ${generateHalfInning(config, "home")}
     <div class="card-footer">
       ${escapeHtml(config.name)}
