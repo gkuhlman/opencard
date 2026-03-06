@@ -1,7 +1,7 @@
 {
   "name": "opencard",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Open source baseball scorecard builder with visual editor and live preview",
   "keywords": [
     "baseball",
